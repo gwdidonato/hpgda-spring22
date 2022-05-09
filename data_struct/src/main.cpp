@@ -1,12 +1,12 @@
 #include <iostream>
-// #include "../include/ALGraph.h"
-// #include "../include/GraphAlgo.h"
 #include <chrono>
 #include <algorithm>
 #include <fstream>
 #include <functional>
 #include <ostream>
 #include <string>
+// #include "../include/ALGraph.h"
+// #include "../include/GraphAlgo.h"
 
 unsigned int count_lines(std::string filename){
     std::ifstream inFile(filename);
@@ -19,7 +19,6 @@ unsigned int count_lines(std::string filename){
     return numLines;
 }
 
-
 int main(int argc, char **argv) {
     // argv[1] -> graph name
     // argv[2] -> D (directed) or U (undirected)
@@ -28,8 +27,8 @@ int main(int argc, char **argv) {
     // std::ifstream vFile(graphName+".v");
     // std::ifstream eFile(graphName+".e");
 
-    unsigned int v = count_lines(graphName+".v");
-    unsigned int e = count_lines(graphName+".e");
+    unsigned int v = count_lines(graphName + ".v");
+    unsigned int e = count_lines(graphName + ".e");
 
     std::cout << "num nodes: " << v << std::endl;
     std::cout << "num edges: " << e << std::endl;
