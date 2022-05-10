@@ -12,7 +12,7 @@ class ALGraph{
         
         class iterator {
         public:
-            iterator(std::list<uint32_t>::iterator ptr, std::list<uint32_t>::iterator begin_w_ptr) : ptr(ptr), begin_w_ptr(begin_w_ptr) {}
+            iterator(std::list<uint32_t>::iterator ptr, std::list<float>::iterator begin_w_ptr) : ptr(ptr), begin_w_ptr(begin_w_ptr) {}
 
             iterator operator++() {
                 ++ptr;
@@ -22,21 +22,23 @@ class ALGraph{
 
             bool operator!=(const iterator &other) { return ptr != other.ptr; }
 
-            const std::pair<uint32_t, uint32_t> &operator*() {
+            const std::pair<uint32_t, float> &operator*() {
                 current.first = *ptr;
                 current.second = *begin_w_ptr;
                 return current;
             };
 
         private:
-            std::list<uint32_t>::iterator ptr, begin_w_ptr;
-            std::pair<uint32_t, uint32_t > current;
+            std::list<uint32_t>::iterator ptr;
+            std::list<float>::iterator begin_w_ptr;
+            std::pair<uint32_t, float > current;
         };
 
     private:
-        std::list<uint32_t>::iterator begin_ptr, end_ptr, begin_w_ptr;
+        std::list<uint32_t>::iterator begin_ptr, end_ptr;
+        std::list<float>::iterator begin_w_ptr;
     public:
-        EdgeIter(std::list<uint32_t>::iterator begin_ptr, std::list<uint32_t>::iterator end_ptr, std::list<uint32_t>::iterator begin_w_ptr) : begin_ptr(begin_ptr), end_ptr(end_ptr), begin_w_ptr(begin_w_ptr) {}
+        EdgeIter(std::list<uint32_t>::iterator begin_ptr, std::list<uint32_t>::iterator end_ptr, std::list<float>::iterator begin_w_ptr) : begin_ptr(begin_ptr), end_ptr(end_ptr), begin_w_ptr(begin_w_ptr) {}
 
         iterator begin() const { return iterator(begin_ptr, begin_w_ptr); }
 
@@ -45,7 +47,7 @@ class ALGraph{
 
     uint64_t v, e;
     std::list<uint32_t>* edges;
-    std::list<uint32_t>* weights;
+    std::list<float>* weights;
 
 public:
 
@@ -56,7 +58,7 @@ public:
 
     ALGraph(uint64_t v, uint64_t e) : v(v), e(e){
         edges = new std::list<uint32_t>[v + 2];
-        weights = new std::list<uint32_t>[v + 2];
+        weights = new std::list<float>[v + 2];
         for(int i = 0; i <= v; ++i)
             edges[i].clear(), weights[i].clear();
     }
@@ -69,9 +71,9 @@ public:
         //std::cout<<"ALGraph delete"<<std::endl;
     }
 
-    void add_edge(int from, std::vector<uint32_t>& to, std::vector<uint32_t>& w);
+    void add_edge(int from, std::vector<uint32_t>& to, std::vector<float>& w);
 
-    void add_edge(int from, uint32_t to, uint32_t weight = 0);
+    void add_edge(int from, uint32_t to, float weight = 0);
 
     void finished();
 
@@ -79,7 +81,8 @@ public:
 
     template<typename CB>
     void applyAllEdges(uint32_t from, CB lambdaCallback){
-        std::list<uint32_t>::iterator begin_edges, end_edges, begin_weights_ptr;
+        std::list<uint32_t>::iterator begin_edges, end_edges;
+        std::list<float>::iterator begin_weights_ptr;
         begin_edges = begin(from);
         end_edges = end(from);
         begin_weights_ptr = begin_weights(from);
@@ -96,7 +99,7 @@ public:
         return edges[cur_vertex].end();
     }
 
-    inline std::list<uint32_t>::iterator begin_weights(int cur_vertex) {
+    inline std::list<float>::iterator begin_weights(int cur_vertex) {
         return weights[cur_vertex].begin();
     }
 };
