@@ -1,14 +1,20 @@
-#include <fstream>
+#ifndef ORACLE_CONTEST_UTILS_H
+#define ORACLE_CONTEST_UTILS_H
+
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <sstream> 
 #include <vector>
 #include <set>
+#include <chrono>
+#include <algorithm>
+#include <functional>
 
 // count non empty lines in a file
-unsigned int count_lines(std::string filename){
+uint64_t count_lines(std::string filename){
     std::ifstream inFile(filename);
-    unsigned int numLines = 0;
+    uint64_t numLines = 0;
     std::string line;
     while (std::getline(inFile, line)) {
         if (!line.empty())
@@ -29,11 +35,11 @@ std::vector<std::string> split(const std::string &s, char delim){
 }
 
 // load the graph
-std::set<uint32_t> load_graph(std::string filename, bool undirected, std::tuple<uint32_t, uint32_t, float>* edges, unsigned int e){
+std::set<uint64_t> load_graph(std::string filename, bool undirected, std::tuple<uint64_t, uint64_t, double>* edges, uint64_t e){
     std::ifstream eFile(filename+".e");
     std::string line;
     std::vector<std::string> tmp;    
-    std::set<uint32_t> nodes;
+    std::set<uint64_t> nodes;
 
     while (std::getline(eFile, line)){
         if (!line.empty()){
@@ -47,7 +53,7 @@ std::set<uint32_t> load_graph(std::string filename, bool undirected, std::tuple<
     if (tmp.size() == 3)
         weighted = true;
 
-    unsigned int i = 0;
+    uint64_t i = 0;
 
     // TODO make it faster
     while (std::getline(eFile, line)){
@@ -64,15 +70,17 @@ std::set<uint32_t> load_graph(std::string filename, bool undirected, std::tuple<
     return nodes;
 }
 
-void print_graph_info(unsigned int v, unsigned int e, bool undirected){
+void print_graph_info(uint64_t v, uint64_t e, bool undirected){
     std::string prop = (undirected) ? "Undirected" : "Directed";
     std::cout << prop << " graph" << std::endl;
     std::cout << "num nodes: " << v << std::endl;
     std::cout << "num directed edges: " << e << std::endl << std::endl;
 }
 
-void print_edges(std::tuple<uint32_t, uint32_t, float>* edges, unsigned int e){
-    for(int j = 0; j < e; j++)
+void print_edges(std::tuple<uint64_t, uint64_t, double>* edges, uint64_t e){
+    for(uint64_t j = 0; j < e; j++)
         std::cout << std::get<0>(edges[j]) << " " << std::get<1>(edges[j]) << " " << std::get<2>(edges[j]) << std::endl;
     std::cout << std::endl;
 }
+
+#endif //ORACLE_CONTEST_UTILS_H
