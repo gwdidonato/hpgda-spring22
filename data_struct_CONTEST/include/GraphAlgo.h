@@ -2,6 +2,7 @@
 #define ORACLE_CONTEST_GRAPHALGO_HPP
 
 #include <cstring>
+#include <iostream>
 #include <queue>
 #include <climits>
 #include <set>
@@ -28,37 +29,28 @@ public:
         delete graph;
     }
 
-    inline void sortByEdgesByNodeId() {
+    void sortByEdgesByNodeId() {
         graph->sortByEdgesByNodeId();
     }
 
-    // uint64_t bfs(uint32_t cur_vertex) {
-    //     uint64_t sum = 0;
-    //     bool* temp_used = used;
-    //     memset(used, 0, sizeof(bool) * (v + 2));
-    //     std::queue<uint32_t > q;
-    //     q.push(cur_vertex);
-    //     temp_used[cur_vertex] = true;
-    //     auto lambdaFunction = [&sum, &q, &temp_used] (uint32_t edge, uint32_t weight){
-    //         if (!temp_used[edge]) {
-    //             sum = sum + weight;
-    //             temp_used[edge] = true;
-    //             q.push(edge);
-    //         }
-    //     };
+    void add_edge(int v, std::vector<uint32_t > &to, std::vector<float> &weights) {
+        graph->add_edge(v, to, weights);
+    }
 
-    //     while (!q.empty()) {
-    //         cur_vertex = q.front();
-    //         q.pop();
-    //         graph->applyAllEdges(cur_vertex, lambdaFunction);
-    //     }
-        
-    //     return sum;
+    void add_edge(uint32_t from, uint32_t to, float weight) {
+        graph->add_edge(from, to, weight);
+    }
 
-    // }
+    void populate(std::tuple<uint32_t, uint32_t, float>* edges) {
+        graph->populate(edges);
+    }
 
-    std::vector<uint32_t> bfs_prev(uint32_t cur_vertex) {
-        std::vector<uint32_t> result;
+    void finished() {
+        graph->finished();
+    }
+
+    float bfs(uint32_t cur_vertex) {
+        float sum = 0;
         memset(used, 0, sizeof(bool) * (v + 2));
         std::queue<uint32_t > q;
         q.push(cur_vertex);
@@ -66,15 +58,15 @@ public:
         while (!q.empty()) {
             cur_vertex = q.front();
             q.pop();
-
             for (auto& to : graph->get_neighbors(cur_vertex)) {
                 if (!used[to.first]) {
-                    used[to.first] = true, q.push(to.first);
+                    used[to.first] = true;
+                    q.push(to.first);
+                    sum = sum + to.second;
                 }
             }
         }
         return sum;
-
     }
 
     float dfs_recursion(int cur_vertex) {
@@ -91,18 +83,6 @@ public:
     float dfs(int cur_vertex) {
         memset(used, 0, sizeof(bool) * (v + 2));
         return dfs_recursion(cur_vertex);
-    }
-
-    void add_edge(int v, std::vector<uint32_t > &to, std::vector<float> &weights) {
-        graph->add_edge(v, to, weights);
-    }
-
-    void add_edge(uint32_t from, uint32_t to, float weight) {
-        graph->add_edge(from, to, weight);
-    }
-
-    void finished() {
-        graph->finished();
     }
 
     // uint64_t dijkstra(int from, int to) {

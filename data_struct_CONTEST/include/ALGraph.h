@@ -75,21 +75,11 @@ public:
 
     void add_edge(int from, uint32_t to, float weight = 0);
 
-    void finished();
-
     void sortByEdgesByNodeId();
 
-    template<typename CB>
-    void applyAllEdges(uint32_t from, CB lambdaCallback){
-        std::list<uint32_t>::iterator begin_edges, end_edges;
-        std::list<float>::iterator begin_weights_ptr;
-        begin_edges = begin(from);
-        end_edges = end(from);
-        begin_weights_ptr = begin_weights(from);
+    void finished();
 
-        for(; begin_edges != end_edges; ++begin_edges, ++begin_weights_ptr)
-            lambdaCallback(*begin_edges, *begin_weights_ptr);
-    };
+    void populate(std::tuple<uint32_t, uint32_t, float>* e_list);
 
     inline std::list<uint32_t>::iterator begin(int cur_vertex) {
         return edges[cur_vertex].begin();
@@ -102,6 +92,18 @@ public:
     inline std::list<float>::iterator begin_weights(int cur_vertex) {
         return weights[cur_vertex].begin();
     }
+    
+    template<typename CB>
+    void applyAllEdges(uint32_t from, CB lambdaCallback){
+        std::list<uint32_t>::iterator begin_edges, end_edges;
+        std::list<float>::iterator begin_weights_ptr;
+        begin_edges = begin(from);
+        end_edges = end(from);
+        begin_weights_ptr = begin_weights(from);
+
+        for(; begin_edges != end_edges; ++begin_edges, ++begin_weights_ptr)
+            lambdaCallback(*begin_edges, *begin_weights_ptr);
+    };
 };
 
 

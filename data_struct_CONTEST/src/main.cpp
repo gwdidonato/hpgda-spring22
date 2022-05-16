@@ -7,29 +7,10 @@
 #include <string>
 #include <sstream> 
 #include <set>
+#include "../include/utils.h"
 #include "../include/ALGraph.h"
 #include "../include/GraphAlgo.h"
 
-unsigned int count_lines(std::string filename){
-    std::ifstream inFile(filename);
-    unsigned int numLines = 0;
-    std::string line;
-    while (std::getline(inFile, line)) {
-        if (!line.empty())
-            numLines++;
-    }
-    return numLines;
-}
-
-std::vector<std::string> split (const std::string &s, char delim){
-    std::vector<std::string> result;
-    std::stringstream ss(s);
-    std::string item;
-    while (std::getline(ss, item, delim)) {
-        result.push_back(item);
-    }
-    return result;
-}
 
 int main(int argc, char **argv) {
     // argv[1] -> graph name
@@ -45,46 +26,55 @@ int main(int argc, char **argv) {
         undirected = (std::string(argv[2]) == "-U") ? true : false; 
     }
 
+    // get number of edges
     unsigned int e = count_lines(graphName + ".e");
     if (undirected) e *= 2;
 
+    // temporary data structs for nodes and edges
     std::tuple<uint32_t, uint32_t, float>* edges = new std::tuple<uint32_t, uint32_t, float>[e];
     std::set<uint32_t> nodes;
-    
-    std::ifstream eFile(graphName+".e");
-    std::string line;
-    std::vector<std::string> tmp;
-    unsigned int i = 0;
-    while (std::getline(eFile, line)){
-        if (!line.empty()){
-            tmp = split(line, ' ');
-            edges[i] = std::make_tuple(std::stoi(tmp[0]), std::stoi(tmp[1]), std::stof(tmp[2]));
-            if (undirected) 
-                edges[e/2+i] = std::make_tuple(std::stoi(tmp[1]), std::stoi(tmp[0]), std::stof(tmp[2]));
-            nodes.insert(std::stoi(tmp[0]));
-            nodes.insert(std::stoi(tmp[1]));
-            i++;
-        }
-    }
 
+    // read nodes and edges
+    nodes = load_graph(graphName, undirected, edges, e);
+
+    // get number of nodes (TODO, get nodes from .v file instead)
     unsigned int v = nodes.size();
     
-    std::string prop = (undirected) ? "Undirected" : "Directed";
-    std::cout << prop << " graph" << std::endl;
-    std::cout << "num nodes: " << v << std::endl;
-    std::cout << "num directed edges: " << e << std::endl;
+    // print graph info
+    // print_graph_info(v, e, undirected);
 
-    // for(int j = 0; j < e; j++){
-    //     std::cout << std::get<0>(edges[j]) << " " << std::get<1>(edges[j]) << " " << std::get<2>(edges[j]) << std::endl;
-    // }
+    // print edges
+    // print_edges(edges, e);
 
+    // instantiate the graph
     auto *graph = new GraphAlgo<ALGraph>(v,e);
-    for(i = 0; i < e; i++){
-        graph->add_edge(std::get<0>(edges[i]), std::get<1>(edges[i]), std::get<2>(edges[i]));
-        proof += std::get<2>(edges[i]);
-    }
-    graph->finished();
-    float result = graph->bfs_prev(1);
+    
+    // populate the graph and measure time
+    auto begin_populate = std::chrono::high_resolution_clock::now();
+    graph->populate(edges);
+    auto end_populate = std::chrono::high_resolution_clock::now();
+    auto elapsed_populate = std::chrono::duration_cast<std::chrono::milliseconds>(end_populate - begin_populate);
+    std::cout << "Graph population time: " << elapsed_populate.count() << " ms" << std::endl;
+
+    float result = -1;
+    
+    // execute bfs and measure time
+    auto begin_bfs = std::chrono::high_resolution_clock::now();
+    result = graph->bfs(2);
+    auto end_bfs = std::chrono::high_resolution_clock::now();
+    auto elapsed_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(end_bfs - begin_bfs);
+    std::cout << "BFS sum: " << result << std::endl;
+    std::cout << "BFS execution time: " << elapsed_bfs.count() << " ms" << std::endl;
+
+    // execute dfs and measure time
+    auto begin_dfs = std::chrono::high_resolution_clock::now();
+    result = graph->dfs(2);
+    auto end_dfs = std::chrono::high_resolution_clock::now();
+    auto elapsed_dfs = std::chrono::duration_cast<std::chrono::milliseconds>(end_dfs - begin_dfs);
+    std::cout << "DFS sum: " << result << std::endl;
+    std::cout << "DFS execution time: " << elapsed_dfs.count() << " ms" << std::endl;
+
+    
 
     return 0;
 }
