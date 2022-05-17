@@ -53,7 +53,6 @@ public:
 
     EdgeIter get_neighbors(int idx){
         return EdgeIter(begin(idx), end(idx), begin_weights(idx));
-        //return edges[idx];
     }
 
     AdjacencyList(uint64_t v, uint64_t e) : v(v), e(e){

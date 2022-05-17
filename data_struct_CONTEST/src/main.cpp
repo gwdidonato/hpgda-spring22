@@ -11,6 +11,9 @@ int main(int argc, char **argv) {
     // argv[2] -> source vertex for BFS and DFS (default: 1)
     // argv[3] -> -U (if undirected graph, default: directed graph)
 
+    // variables to measure memory usage
+    double vm_usage = 0.0, resident_set_size = 0.0;
+
     // vertex stored in graphName.v
     // edges stored in graphName.e
     std::string graphName = argv[1];
@@ -23,7 +26,10 @@ int main(int argc, char **argv) {
 
     // get number of edges
     uint64_t e = count_lines(graphName + ".e");
+    // no self-loop allowed: each undirected edge = 2 directed edges
     if (undirected) e *= 2;
+
+    process_mem_usage(vm_usage, resident_set_size, false);
 
     // temporary data structs for nodes and edges
     std::tuple<uint64_t, uint64_t, double>* edges = new std::tuple<uint64_t, uint64_t, double>[e];
@@ -34,6 +40,9 @@ int main(int argc, char **argv) {
     nodes = load_graph(graphName, undirected, edges, e);
     std::cout << "Graph loaded!" << std::endl << std::endl;
 
+    process_mem_usage(vm_usage, resident_set_size, false);
+    std::cout << "Edge list size: " << resident_set_size/1024 << " MB" << std::endl << std::endl;
+
     // get number of nodes (TODO, get nodes from .v file instead)
     uint64_t v = nodes.size();
     
@@ -41,7 +50,9 @@ int main(int argc, char **argv) {
     print_graph_info(v, e, undirected);
 
     // print edges
-    // print_edges(edges, e);
+    // print_edge_list(edges, e);
+
+    process_mem_usage(vm_usage, resident_set_size, false);
 
     // instantiate the graph
     auto *graph = new GraphAlgo<AdjacencyList>(v,e);
@@ -52,6 +63,9 @@ int main(int argc, char **argv) {
     auto end_populate = std::chrono::high_resolution_clock::now();
     auto elapsed_populate = std::chrono::duration_cast<std::chrono::milliseconds>(end_populate - begin_populate);
     std::cout << "Graph population time: " << elapsed_populate.count() << " ms" << std::endl << std::endl;
+    
+    process_mem_usage(vm_usage, resident_set_size, false);
+    std::cout << "Graph size: " << resident_set_size/1024 << " MB" << std::endl << std::endl;
 
     uint64_t src_vertex = 1;
     if (argc > 2){
@@ -80,8 +94,9 @@ int main(int argc, char **argv) {
     std::cout << "Writing DFS results..." << std::endl;
     graph->write_results(graphName + ".dfs");
     std::cout << "DFS results written in " << graphName + ".dfs" << std::endl << std::endl;
-    delete graph;
 
+    delete graph;
+    delete[] edges;
     return 0;
 }
 
