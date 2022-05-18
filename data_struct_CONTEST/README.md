@@ -20,8 +20,25 @@ Your implementation must interface with the ```GraphAlgorithm``` class, by expos
 * get_neighbors
 * finished
 You can implement any other methods you may need.
+An example implementation is provided in ```AdjacencyList.h```  and ```AdjacencyList.cpp```. 
 You must update ```src/main.cpp``` to use your data structure during the execution.
 You are not required to update the ```GraphAlgorithm``` class (if you do, tell us how you changed it and why).
+
+```src/main.cpp``` takes three positional arguments:
+- *graph name* (default is ```example-directed```);
+- *source vertex* for BFS and DFS (default is 1);
+- `-U` if the graph is undirected (default is directed).
+
+<!-- TODO: update it to use a bash script for multiple execution -->
+To build the example, just run ```make``` in this folder.
+To run the example on the ```example-directed``` graph, :
+``` 
+bin/exe data/example-directed 2
+```
+To run the example on the ```example-undirected``` graph, :
+``` 
+bin/exe data/example-undirected 2 -U
+```
 
 ## Evaluation
 Your solution will be evaluated w.r.t. the following metrics:
@@ -30,19 +47,12 @@ Your solution will be evaluated w.r.t. the following metrics:
 * execution time of the BFS and DFS algorithms implemented in ```GraphAlgorithm```
 The ```src/main.cpp``` code already measures all this values.
 
-## Build and run the code
-An example implementation is provided in ```AdjacencyList.h```  and ```AdjacencyList.cpp```. 
-To build the example, just run ```make``` in this folder.
-To run the example on the ```example-directed``` graph:
-``` 
-bin/exe data/example-directed
-``` 
 
 ## Submission
 You must submit your solution by June 26th 11.59 PM. 
 
 The submission consists in an email to Guido Walter Di Donato (`guidowalter.didonato at polimi.it`) with CC Marco Santambrogio (`marco.santambrogio at polimi.it`),
-containing the name of the partecipants, and a link to the `git` repository on which you developed your solution.
+containing the name of the partecipants, and a link to the `git` repository on which you developed your solution (no commit after June 26th 11.59 PM).
 
 The repository must contain:
 * The source code
@@ -50,7 +60,7 @@ The repository must contain:
 
 Please note:
 
-* Your code must be buildable with standard tools like Maven.
+* Your code must be buildable with `make`.
 * Tests must be runnable using a bash or python script.
 * Keep in mind: the easier for us to replicate your results, the better it is for you!
 * External libraries are allowed, as long as you justify their usage and the *core* of the implementation is written by you. You can use existing implementations, but only as a performance comparison against your custom implementation.
