@@ -1,5 +1,5 @@
-#ifndef ORACLE_CONTEST_GRAPHALGO_H
-#define ORACLE_CONTEST_GRAPHALGO_H
+#ifndef ORACLE_CONTEST_GRAPHALGORITHM_H
+#define ORACLE_CONTEST_GRAPHALGORITHM_H
 
 #include <cstring>
 #include <fstream>
@@ -11,43 +11,48 @@
 #include <string>
 
 template<typename T>
-class GraphAlgo {
+class GraphAlgorithm {
     uint64_t v, e, last;
     uint64_t *dist;
     bool *used;
     T *graph;
 
 public:
-    GraphAlgo(uint64_t v, uint64_t e) : v(v), e(e) {
+    GraphAlgorithm(uint64_t v, uint64_t e) : v(v), e(e) {
         used = new bool[v + 2];
         dist = new uint64_t[v + 2];
         graph = new T(v, e);
     }
 
-    ~GraphAlgo() {
+    ~GraphAlgorithm() {
         delete[] used;
         delete[] dist;
         delete graph;
     }
 
-    void sortByEdgesByNodeId() {
-        graph->sortByEdgesByNodeId();
-    }
-
-    void add_edge(uint64_t from, std::vector<uint64_t> &to, std::vector<double> &weights) {
-        graph->add_edge(from, to, weights);
-    }
-
-    void add_edge(uint64_t from, uint64_t to, double weight) {
-        graph->add_edge(from, to, weight);
-    }
-
+    // required
     void populate(std::tuple<uint64_t, uint64_t, double>* edges) {
         graph->populate(edges);
     }
-
+    
+    // required
     void finished() {
         graph->finished();
+    }
+
+    // optional
+    void sortEdgesByNodeId() {
+        graph->sortEdgesByNodeId();
+    }
+
+    // optional
+    void add_edges(uint64_t from, std::vector<uint64_t> &to, std::vector<double> &weights) {
+        graph->add_edges(from, to, weights);
+    }
+
+    // optional
+    void add_edge(uint64_t from, uint64_t to, double weight) {
+        graph->add_edge(from, to, weight);
     }
 
     void write_results(std::string filename) {
@@ -57,6 +62,8 @@ public:
         }
     }
 
+    // the bfs populate diff with the corresponding 
+    // layer of the BFS tree for each vertex
     double bfs(uint64_t cur_vertex) {
         // initialization
         memset(used, 0, sizeof(bool) * (v + 2));
@@ -84,6 +91,8 @@ public:
         return sum;
     }
 
+    // the dfs populate diff with the visiting 
+    // order for each vertex
     double dfs_recursion(uint64_t cur_vertex) {
         double sum = 0;
         used[cur_vertex] = true;
@@ -110,4 +119,4 @@ public:
 
 };
 
-#endif //ORACLE_CONTEST_GRAPHALGO_H
+#endif //ORACLE_CONTEST_GRAPHALGORITHM_H

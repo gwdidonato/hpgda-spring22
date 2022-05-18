@@ -1,6 +1,6 @@
 #include "../include/utils.h"
 #include "../include/AdjacencyList.h"
-#include "../include/GraphAlgo.h"
+#include "../include/GraphAlgorithm.h"
 #include <fstream>
 #include <ostream>
 #include <string>
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     process_mem_usage(vm_usage, resident_set_size, false);
 
     // instantiate the graph
-    auto *graph = new GraphAlgo<AdjacencyList>(v,e);
+    auto *graph = new GraphAlgorithm<AdjacencyList>(v,e);
     
     // populate the graph and measure time
     auto begin_populate = std::chrono::high_resolution_clock::now();

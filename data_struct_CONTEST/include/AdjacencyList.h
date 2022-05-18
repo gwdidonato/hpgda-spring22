@@ -74,7 +74,7 @@ public:
 
     void add_edge(int from, uint64_t to, double weight = 0);
 
-    void sortByEdgesByNodeId();
+    void sortEdgesByNodeId();
 
     void finished();
 

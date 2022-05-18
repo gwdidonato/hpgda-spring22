@@ -18,7 +18,7 @@ void AdjacencyList::populate(std::tuple<uint64_t, uint64_t, double>* e_list){
     finished();
 }
 
-void AdjacencyList::sortByEdgesByNodeId() {
+void AdjacencyList::sortEdgesByNodeId() {
     for(uint64_t i = 0; i <= v; ++i)
         edges[i].sort();
 }
