@@ -74,4 +74,3 @@ Please note:
 * Make sure that the code prints the standard CSV with the result, and nothing else, when not using the debug flag.
 * External libraries are allowed, as long as you justify their usage and the *core* of the implementation is written by you. You can use existing implementations, but only as a performance comparison against your custom implementation.
 * The report should be 6 pages long at most, and written in single- or double-column Latex, with font-size 10pt.
-
