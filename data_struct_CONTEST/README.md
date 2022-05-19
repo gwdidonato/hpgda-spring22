@@ -58,14 +58,14 @@ The ```src/main.cpp``` code already measures all this values.
 
 
 ## Submission
-You must submit your solution by June 26th 11.59 PM. 
+You must submit your solution by June 26th 11.59 PM (the report is due June 30th 11.59 PM). 
 
 The submission consists in an email to Guido Walter Di Donato (`guidowalter.didonato at polimi.it`) with CC Marco Santambrogio (`marco.santambrogio at polimi.it`),
 containing the name of the partecipants, and a link to the `git` repository on which you developed your solution (no commit after June 26th 11.59 PM).
 
 The repository must contain:
 * The source code
-* A report describing any implementative decision you took that you'd like to share with us, and your findings in terms of performance of the implemented data structure compared to the provided `AdjacencyList`.
+* A report describing any implementative decision you took that you'd like to share with us, and your findings in terms of performance of the implemented data structure compared to the provided `AdjacencyList` (the report can be also submitted via email from June 27th to June 30th 11.59 PM).
 
 Please note:
 
@@ -74,3 +74,4 @@ Please note:
 * Make sure that the code prints the standard CSV with the result, and nothing else, when not using the debug flag.
 * External libraries are allowed, as long as you justify their usage and the *core* of the implementation is written by you. You can use existing implementations, but only as a performance comparison against your custom implementation.
 * The report should be 6 pages long at most, and written in single- or double-column Latex, with font-size 10pt.
+
