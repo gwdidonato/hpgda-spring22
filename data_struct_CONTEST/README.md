@@ -24,20 +24,29 @@ An example implementation is provided in ```AdjacencyList.h```  and ```Adjacency
 You must update ```src/main.cpp``` to use your data structure during the execution.
 You are not required to update the ```GraphAlgorithm``` class (if you do, tell us how you changed it and why).
 
-```src/main.cpp``` takes three positional arguments:
-- *graph name* (default is ```example-directed```);
-- *source vertex* for BFS and DFS (default is 1);
-- `-U` if the graph is undirected (default is directed).
+```src/main.cpp``` takes four positional arguments:
+- *graph name* (requires);
+- *source vertex* for BFS and DFS (required);
+- `-U` if the graph is undirected (default is directed);
+- `-d` for debugging mode (default is no debugging)
 
-<!-- TODO: update it to use a bash script for multiple execution -->
 To build the example, just run ```make``` in this folder.
-To run the example on the ```example-directed``` graph, :
+To run the example on the ```example_directed``` graph:
 ``` 
-bin/exe data/example-directed 2
+bin/exe data/example_directed 2 -d
 ```
-To run the example on the ```example-undirected``` graph, :
+To run the example on the ```example_undirected``` graph:
 ``` 
-bin/exe data/example-undirected 2 -U
+bin/exe data/example_undirected 2 -U -d
+```
+To run the example on the ```wiki_Talk``` graph:
+``` 
+bin/exe data/wiki_Talk 2 -d
+```
+
+To run a evaluation-like script:
+``` 
+bash run.sh
 ```
 
 ## Evaluation
@@ -62,7 +71,7 @@ Please note:
 
 * Your code must be buildable with `make`.
 * Tests must be runnable using a bash or python script.
-* Keep in mind: the easier for us to replicate your results, the better it is for you!
+* Make sure that the code prints the standard CSV with the result, and nothing else, when not using the debug flag.
 * External libraries are allowed, as long as you justify their usage and the *core* of the implementation is written by you. You can use existing implementations, but only as a performance comparison against your custom implementation.
 * The report should be 6 pages long at most, and written in single- or double-column Latex, with font-size 10pt.
 
