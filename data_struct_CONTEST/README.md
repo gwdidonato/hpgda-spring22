@@ -19,13 +19,14 @@ Your implementation must interface with the ```GraphAlgorithm``` class, by expos
 * populate 
 * get_neighbors
 * finished
+
 You can implement any other methods you may need.
 An example implementation is provided in ```AdjacencyList.h```  and ```AdjacencyList.cpp```. 
 You must update ```src/main.cpp``` to use your data structure during the execution.
 You are not required to update the ```GraphAlgorithm``` class (if you do, tell us how you changed it and why).
 
 ```src/main.cpp``` takes four positional arguments:
-- *graph name* (requires);
+- *graph name* (required);
 - *source vertex* for BFS and DFS (required);
 - `-U` if the graph is undirected (default is directed);
 - `-d` for debugging mode (default is no debugging)
