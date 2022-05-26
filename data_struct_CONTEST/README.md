@@ -54,7 +54,8 @@ bash run.sh
 Your solution will be evaluated w.r.t. the following metrics:
 * graph population time
 * graph size in memory (that's why you don't want to use the Adjacency Matrix!)
-* execution time of the BFS and DFS algorithms implemented in ```GraphAlgorithm```
+* execution time of the BFS and DFS algorithms implemented in ```GraphAlgorithm```.
+
 The ```src/main.cpp``` code already measures all this values.
 
 
