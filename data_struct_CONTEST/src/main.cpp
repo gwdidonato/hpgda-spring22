@@ -102,7 +102,6 @@ int main(int argc, char **argv) {
         else
             std::cout << rss_tmp/1024 << ",";
 
-
         double result = -1;
         
         // execute bfs and measure time
