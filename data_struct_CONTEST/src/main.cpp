@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
         if(debug) 
             std::cout << "Graph population time: " << elapsed_populate.count() << " ms" << std::endl << std::endl;
         else 
-            std::cout << elapsed_populate.count() << ",";
+            std::cout << src_vertex << "," << elapsed_populate.count() << ",";
         
         //  get increment in memory usage after instantiating and populating the graph
         vm_tmp = vm_usage;
