@@ -2,4 +2,6 @@ data_struct_CONTEST/data/N*
 data_struct_CONTEST/data/*.bfs
 data_struct_CONTEST/data/*.dfs
 data_struct_CONTEST/bin/*
-big_datasets
+data_struct_CONTEST/eval_graphs
+data_struct_CONTEST/results_*
+data_struct_CONTEST/*.log

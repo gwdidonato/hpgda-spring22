@@ -60,11 +60,11 @@ std::set<uint64_t> load_graph(std::string filename, bool undirected, std::tuple<
     while (std::getline(eFile, line)){
         if (!line.empty()){
             tmp = split(line, ' ');
-            edges[i] = std::make_tuple(std::stoi(tmp[0]), std::stoi(tmp[1]), (weighted)?std::stof(tmp[2]):1);
+            edges[i] = std::make_tuple(std::stoul(tmp[0]), std::stoul(tmp[1]), (weighted)?std::stof(tmp[2]):1);
             if (undirected) 
-                edges[e/2+i] = std::make_tuple(std::stoi(tmp[1]), std::stoi(tmp[0]), (weighted)?std::stof(tmp[2]):1);
-            nodes.insert(std::stoi(tmp[0]));
-            nodes.insert(std::stoi(tmp[1]));
+                edges[e/2+i] = std::make_tuple(std::stoul(tmp[1]), std::stoul(tmp[0]), (weighted)?std::stof(tmp[2]):1);
+            nodes.insert(std::stoul(tmp[0]));
+            nodes.insert(std::stoul(tmp[1]));
             i++;
         }
     }
