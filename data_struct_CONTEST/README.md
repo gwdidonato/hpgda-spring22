@@ -47,11 +47,11 @@ You must update ```src/main.cpp``` to use your data structure during the executi
 You are not required to update the ```GraphAlgorithm``` class (if you do, tell us how you changed it and why).
 
 ```src/main.cpp``` takes five positional arguments:
-- *path to graph* (required);
-- *source vertex* for BFS and DFS (required);
-- *number of iterations* of graph population, BFS and DFS (required);
-- `-U` if the graph is undirected (default is directed);
-- `-d` for debugging mode (default is no debugging)
+1. *path to graph* (required);
+1. *source vertex* for BFS and DFS (required);
+1. *number of iterations* of graph population, BFS and DFS (required);
+1. `-U` if the graph is undirected (default is directed);
+1. `-d` for debugging mode (default is no debugging)
 
 To build the example, just run ```make``` in this folder.
 

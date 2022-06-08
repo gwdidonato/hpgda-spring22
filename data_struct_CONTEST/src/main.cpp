@@ -80,6 +80,7 @@ int main(int argc, char **argv) {
     
     for(uint64_t i = 0; i < num_iterations; i++){
 
+        if(debug) std::cout << "Iteration " << i+1 << std::endl << std::endl;
         // instantiate the graph
         auto *graph = new GraphAlgorithm<AdjacencyList>(v,e);
         
@@ -111,15 +112,16 @@ int main(int argc, char **argv) {
         auto elapsed_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(end_bfs - begin_bfs);
         if(debug) {
             std::cout << "BFS execution time: " << elapsed_bfs.count() << " ms" << std::endl;
-            std::cout << "BFS sum: " << result << std::endl;
-            std::cout << "Writing BFS results..." << std::endl;
+            std::cout << "BFS sum: " << result << std::endl << std::endl;
         } else {
             std::cout << elapsed_bfs.count() << "," << result << ",";
         }
         // write results of the BFS (just at the 1st iteration)
         if(i == 0){
             graph->write_results(graphName + ".bfs");
-            if(debug) std::cout << "BFS results written in " << graphName + ".bfs" << std::endl << std::endl;
+            if(debug){
+                std::cout << "Writing BFS results..." << std::endl;
+                std::cout << "BFS results written in " << graphName + ".bfs" << std::endl << std::endl;
         }
         // execute dfs and measure time
         auto begin_dfs = std::chrono::high_resolution_clock::now();
@@ -128,15 +130,17 @@ int main(int argc, char **argv) {
         auto elapsed_dfs = std::chrono::duration_cast<std::chrono::milliseconds>(end_dfs - begin_dfs);
         if(debug) {
             std::cout << "DFS execution time: " << elapsed_dfs.count() << " ms" << std::endl;
-            std::cout << "DFS sum: " << result << std::endl;
-            std::cout << "Writing DFS results..." << std::endl;
+            std::cout << "DFS sum: " << result << std::endl << std::endl;
         } else {
             std::cout << elapsed_dfs.count() << "," << result << std::endl;
         }
         // write results of the DFS (just at the 1st iteration)
         if(i == 0){
             graph->write_results(graphName + ".dfs");
-            if(debug) std::cout << "DFS results written in " << graphName + ".dfs" << std::endl << std::endl;
+            if(debug){
+                std::cout << "Writing DFS results..." << std::endl;
+                std::cout << "DFS results written in " << graphName + ".dfs" << std::endl << std::endl;
+            }
         }
         // free memory
         delete graph;
