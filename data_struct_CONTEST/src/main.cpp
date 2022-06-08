@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
             if(debug){
                 std::cout << "Writing BFS results..." << std::endl;
                 std::cout << "BFS results written in " << graphName + ".bfs" << std::endl << std::endl;
+            }
         }
         // execute dfs and measure time
         auto begin_dfs = std::chrono::high_resolution_clock::now();
