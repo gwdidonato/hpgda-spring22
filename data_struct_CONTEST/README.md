@@ -19,13 +19,12 @@ You can download and extract the archive by running (in this folder):
 wget -O eval_graphs.tar.gz "https://drive.google.com/uc?export=download&id=15vjYvcNAt7FODQqu4kma3X8jXnxTC6J1&confirm=yes" && tar -xzvf eval_graphs.tar.gz
 ```
 
-In the ```eval_graphs``` folder you will find 4 real graphs from the LDBC Graphanalytics Benchmark suite:
+In the ```eval_graphs``` folder you will find 3 real graphs from the LDBC Graphanalytics Benchmark suite:
 
 | Graph | # Nodes | # Edges | Directed |
 |---|---|---|---|
 | wiki-Talk | 2,394,385 | 5,021,410 | True |
 | cit-Patents | 3,774,768 | 16,518,947 | True |
-| kgs | 832,247 | 17,891,698 | False |
 | dota-league | 61,170 | 50,870,313 | False |
 
 For each graph, there is a folder containing 3 files:
