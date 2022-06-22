@@ -140,8 +140,8 @@ void PersonalizedPageRank::cpu_validation(int iter) {
     std::vector<std::pair<int, double>> sorted_pr_golden_tuples = sort_pr(pr_golden.data(), V);
 
     // Check how many of the correct top-20 PPR vertices are retrieved by the GPU;
-    std::unordered_set<int> top_pr_indices;
-    std::unordered_set<int> top_pr_golden_indices;
+    std::set<int> top_pr_indices;
+    std::set<int> top_pr_golden_indices;
     int old_precision = std::cout.precision();
     std::cout.precision(4);
     int topk = std::min(V, topk_vertices);
