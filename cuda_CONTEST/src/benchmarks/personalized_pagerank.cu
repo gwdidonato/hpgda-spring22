@@ -133,7 +133,7 @@ void PersonalizedPageRank::cpu_validation(int iter) {
     personalized_pagerank_cpu(x.data(), y.data(), val.data(), V, E, pr_golden.data(), dangling.data(), personalization_vertex, alpha, 1e-6, 100);
     auto end_tmp = clock_type::now();
     auto exec_time = chrono::duration_cast<chrono::microseconds>(end_tmp - start_tmp).count();
-    std::cout << "exec time CPU=" << double(exec_time) / 1000 << " ms" << std::endl;
+    if(debug) std::cout << "exec time CPU=" << double(exec_time) / 1000 << " ms" << std::endl;
 
     // Obtain the vertices with highest PPR value;
     std::vector<std::pair<int, double>> sorted_pr_tuples = sort_pr(pr.data(), V);
